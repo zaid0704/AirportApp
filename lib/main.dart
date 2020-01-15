@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './handling_data/Auth.dart';
 import './Screens/signup.dart';
+import './Screens/report.dart';
 // void main() => runApp(SignUp());
 // void main() => runApp(Login());
 // void main() => runApp(MyApp());
@@ -29,9 +30,10 @@ class MyApp extends StatelessWidget {
          routes: {
         '/login':(ctx)=>Login(),
         '/homeScreen':(ctx)=>HomeScreen(),
-        '/scanner':(ctx)=>Scanner()
+        '/scanner':(ctx)=>Scanner(),
+        '/report':(ctx)=>Report()
       },
-      home:HomeScreen()
+      home:SignUp()
     ),);
   }
 }

@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   provider: ^3.1.0+1
   http: ^0.12.0+4
+  qrscan: ^0.2.17
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -45,7 +46,7 @@ flutter:
   assets:
    - assets/scanner_background.png
    - assets/logo.png
-
+   - assets/scanner.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

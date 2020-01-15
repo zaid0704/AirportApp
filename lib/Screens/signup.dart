@@ -19,6 +19,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController passController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController uidController = TextEditingController();
+  bool isSubmitting = false;
   Widget build(BuildContext context) {
     final auth = Provider.of<Auth>(context);
     return Scaffold(
@@ -203,7 +204,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                     ),
                     
-                   
+                   isSubmitting?CircularProgressIndicator():
                  Row(
                    children: <Widget>[
                      Expanded(
@@ -267,10 +268,16 @@ class _SignUpState extends State<SignUp> {
   }
   void _submit(BuildContext context,TextEditingController email,TextEditingController pass,TextEditingController uid,TextEditingController name,Auth auth)async{
     key.currentState.save();
+    setState(() {
+      isSubmitting = true;
+    });
+    
     if (key.currentState.validate()){
       print("success");
     final dd = await  auth.signUp(name.text,email.text,uid.text,pass.text);
-    
+     setState(() {
+       isSubmitting = false;
+     });
      if(dd == true)
       Navigator.of(context).pushNamed('/login');
       else print('Unable to Signup');

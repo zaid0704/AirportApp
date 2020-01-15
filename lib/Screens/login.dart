@@ -13,6 +13,7 @@ class _LoginState extends State<Login> {
  final GlobalKey<FormState> key = GlobalKey();
   TextEditingController uidController  = TextEditingController();
   TextEditingController passController = TextEditingController();
+  bool isSubmitting = false;
   Widget build(BuildContext context) {
     final auth = Provider.of<Auth>(context);
     return MaterialApp(
@@ -124,7 +125,7 @@ class _LoginState extends State<Login> {
                     ),
                    
 
-                  
+                  isSubmitting?CircularProgressIndicator():
                  Row(
                    children: <Widget>[
                      Expanded(
@@ -159,9 +160,15 @@ class _LoginState extends State<Login> {
   }
   void _submit(BuildContext context,TextEditingController uid, TextEditingController pass , Auth auth)async{
     key.currentState.save();
+    setState(() {
+      isSubmitting=true;
+    });
     if(key.currentState.validate()){
       print("success login");
       final d = await auth.login(uid.text,pass.text);
+      setState(() {
+        isSubmitting=false;
+      });
       if(d)
       Navigator.of(context).pushNamed('/homeScreen');
       else

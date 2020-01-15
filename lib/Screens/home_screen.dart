@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../handling_data/Auth.dart';
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
 
@@ -7,21 +9,62 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  @override
+  bool load_userData = true;
   Widget build(BuildContext context) {
+   final auth = Provider.of<Auth>(context);
+   Map<String,dynamic> userData = auth.getUserData;
    
     return  MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.grey,
         appBar: AppBar(
-          leading: Icon(Icons.flight_takeoff,color: Colors.white,size: 30,),
+          leading:Padding(
+            padding: const EdgeInsets.all(10),
+            child: Image.asset('assets/logo.png',
+          alignment: Alignment.center),
+          ),
+          
           title: Text('Flight UnderControl',style: TextStyle(color: Colors.white,fontSize: 18),),
-          backgroundColor: Colors.blue,
+          backgroundColor: Color(0xFF092D6F),
           centerTitle: true,
           actions: <Widget>[
-            IconButton(
-              icon:Icon(Icons.more_vert),
-              onPressed: (){},)
+            PopupMenuButton(
+              initialValue: 0,
+              onSelected: (selectedVal){
+                print("$selectedVal");
+                if (selectedVal == 3)
+                 while(Navigator.of(context).canPop())
+                  {
+                    Navigator.of(context).pop();
+                  }
+              },
+              itemBuilder: (_)=>[
+                PopupMenuItem(
+                  value: 0,
+                  child: Text('Refresh',style: TextStyle(color: Color(0xFF092D6F)),),
+                ),
+                 PopupMenuItem(
+                  value: 1,
+                  child: Text('Problems',style: TextStyle(color: Color(0xFF092D6F)),),
+                ),
+                 PopupMenuItem(
+                  value: 2,
+                  child: Text('Help',style: TextStyle(color: Color(0xFF092D6F)),),
+                ),
+                 PopupMenuItem(
+                  value: 3,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      
+                       Text('Logout',style: TextStyle(color: Color(0xFF092D6F)),),
+                       Icon(Icons.arrow_right)
+                    ],
+                  )
+                 
+                )
+              ],
+            )
           ],
         ),
 
@@ -40,11 +83,12 @@ class _HomeScreenState extends State<HomeScreen> {
             // Text('User Details'),
             Card(
               elevation: 6.0,
-              color: Colors.purple,
+              color: Color(0xFFffffff),
               child: Container(
                 height: 150,
                 width: double.infinity,
-                child: Text('User Details',),
+                child: userData == null?Center(child: CircularProgressIndicator(),) 
+                : UserDetails(userData),
               ),
             ),
             Stack(
@@ -52,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height - 243,
-                color: Colors.pink,
+                color:Color.fromRGBO(240, 240, 240, 100),
               ),
             Positioned(
               bottom: 0,
@@ -63,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                  Container(
                   width: 110,
                   height: 80,
-                  color: Color(0xFF003F87),
+                  color: Color(0xFF092D6F),
                   child:IconButton(
                     icon:Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     onPressed: (){
-                      print('Pressed');
+                      print('Report');
+                      Navigator.of(context).pushNamed('/report');
                     },
                 ),
                 ),
@@ -84,13 +129,15 @@ class _HomeScreenState extends State<HomeScreen> {
                  
                   child:   Container(
                     width: 140,
-                    height: 110,
-                    color: Color(0xFF0BB5FF),
+                    height: 100,
+                    color:  Color(0xFF3DBAF1),
                     child:Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         
-                        Icon(Icons.pages,color: Colors.white,),
+                        Image.asset('assets/scanner.png',fit: BoxFit.cover,
+                        width: 50,
+                        height: 50,),
                         SizedBox(height: 4,),
                         Text('Scanner',style: TextStyle(color: Colors.white),)
                       ],
@@ -107,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                   width: 110,
                   height: 80,
-                  color: Color(0xFF003F87),
+                  color:Color(0xFF092D6F),
                   child:  Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -138,5 +185,35 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
     
+  }
+  Widget UserDetails(Map<String,dynamic> userData){
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(width: 10,),
+        Container(
+          width: 70,
+          height: 70,
+          // child: Text('A'),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: Color(0xFF092D6F),width: 2),
+           shape: BoxShape.circle
+          ),
+        ),
+        SizedBox(width: 20,),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text('${userData['name']}',style: TextStyle(color: Color(0xFF000000),fontWeight: FontWeight.bold,fontSize: 22),),
+            Text('${userData['email']}',style: TextStyle(color: Color(0xFF000000)),),
+            Text('${userData['uid']}',style: TextStyle(color: Color(0xFF000000)),),
+
+          ],
+        )
+      ],
+    );
   }
 }

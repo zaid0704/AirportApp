@@ -7,13 +7,19 @@ String name;
 String uid;
 String emailId;
 String password;
-
+String _token;
 // Auth(this.name,this.uid,this.emailId,this.password);
 Map<String,dynamic> userData;
 String get userUid{
   if (uid!=null)
    {
      return uid;
+   }
+}
+String get token{
+  if(_token!=null)
+   {
+     return _token;
    }
 }
 Map<String,dynamic> get getUserData{
@@ -24,6 +30,7 @@ Map<String,dynamic> get getUserData{
 }
 Future<bool> signUp(String name,String emaildId,String uiid,String password)async{
   uid = uiid;
+  print('Name is $name');
   final bool res  = await http.post(
     
     Uri.parse('https://sih2020jss.herokuapp.com/signup'),
@@ -55,11 +62,14 @@ Future<bool> login(String uiid,String password)async{
           'password':password
       }),
      headers: {
+       
        "Accept":"application/json",
        "Content-Type": "application/json"
      }).then((onValue){
        print('val is ${json.decode(onValue.body)}');
        userData = json.decode(onValue.body);
+       _token = json.decode(onValue.body)['token'];
+       print('Token is $_token');
        notifyListeners();
        return true;
      }).catchError((onError){

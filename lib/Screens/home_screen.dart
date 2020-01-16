@@ -32,11 +32,15 @@ class _HomeScreenState extends State<HomeScreen> {
               initialValue: 0,
               onSelected: (selectedVal){
                 print("$selectedVal");
-                if (selectedVal == 3)
+                if (selectedVal == 3){
                  while(Navigator.of(context).canPop())
                   {
                     Navigator.of(context).pop();
-                  }
+                  }}
+                  else if (selectedVal == 1)
+                   {
+                     Navigator.of(context).pushNamed('/problems');
+                   }
               },
               itemBuilder: (_)=>[
                 PopupMenuItem(
@@ -166,6 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 onTap: (){
                   print("Resolved");
+                  Navigator.of(context).pushNamed('/resolved');
                 },
                 )
               ],
@@ -207,9 +212,9 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('${userData['name']}',style: TextStyle(color: Color(0xFF000000),fontWeight: FontWeight.bold,fontSize: 22),),
-            Text('${userData['email']}',style: TextStyle(color: Color(0xFF000000)),),
-            Text('${userData['uid']}',style: TextStyle(color: Color(0xFF000000)),),
+            Text('${userData['item']['name']}',style: TextStyle(color: Color(0xFF000000),fontWeight: FontWeight.bold,fontSize: 22),),
+            Text('${userData['item']['email']}',style: TextStyle(color: Color(0xFF000000)),),
+            Text('${userData['item']['uid']}',style: TextStyle(color: Color(0xFF000000)),),
 
           ],
         )

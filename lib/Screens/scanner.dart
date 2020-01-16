@@ -8,8 +8,9 @@ class Scanner extends StatefulWidget {
 }
 
 class _ScannerState extends State<Scanner> {
+  String cameraScanResult;
   Future _scan()async{
-    String cameraScanResult = await scanner.scan();
+    cameraScanResult = await scanner.scan();
     print('Here the resulkt$cameraScanResult');
   }
   void initState() { 
@@ -19,12 +20,8 @@ class _ScannerState extends State<Scanner> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Stack(
-          children: <Widget>[
-            
-
-          ],
-        ),
+        body: cameraScanResult == null ? Navigator.of(context).pop()
+        :Text('Prduct Details Screen')
       ),
     );
   }

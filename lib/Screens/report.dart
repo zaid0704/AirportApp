@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:provider/provider.dart';
 import '../handling_data/Auth.dart';
+import './MyAppBar.dart';
 class Report extends StatefulWidget {
   Report({Key key}) : super(key: key);
 
@@ -19,22 +20,10 @@ class _ReportState extends State<Report> {
   Widget build(BuildContext context) {
   final auth = Provider.of<Auth>(context);
   final userUid = auth.userUid;
+  final _token =auth.token;
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          leading:  Padding(
-            padding: const EdgeInsets.all(10),
-            child: Image.asset('assets/logo.png',
-          alignment: Alignment.center)),
-          title: Text('Flight UnderControl',style: TextStyle(color: Colors.white,fontSize: 18),),
-          backgroundColor: Color(0xFF092D6F),
-          centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-              icon:Icon(Icons.more_vert),
-              onPressed: (){},)
-          ],
-        ),
+        appBar: MyAppBar(context),
         backgroundColor: Colors.white,
         body:SingleChildScrollView(
           child: Container(
@@ -202,7 +191,7 @@ class _ReportState extends State<Report> {
               child: RaisedButton(
                color: Color(0xFF3DBAF1),
                onPressed: (){
-                 _submit(partController.text,addrController.text,uidController.text,problemController.text,userUid);
+                 _submit(partController.text,addrController.text,uidController.text,problemController.text,userUid,_token);
                },
                textColor: Color(0xFF092D6F),
                child: Text('Submit'),
@@ -227,13 +216,14 @@ class _ReportState extends State<Report> {
     ));
    
   }
-   Future _submit(String part,String addr , String uid ,String problem,String userUid)async{
+   Future _submit(String part,String addr , String uid ,String problem,String userUid,String token)async{
     
     final bool d = await http.get(
     Uri.parse('https://sih2020jss.herokuapp.com/report/$uid'),
      headers: {
        "Accept":"application/json",
-       "Content-Type": "application/json"
+       "Content-Type": "application/json",
+       "Authorization": "Bearer $token",
      }).then((onValue){
        print('val is ${json.decode(onValue.body)}');
        if (json.decode(onValue.body)['message']=='failure')
@@ -262,7 +252,8 @@ class _ReportState extends State<Report> {
       }),
      headers: {
        "Accept":"application/json",
-       "Content-Type": "application/json"
+       "Content-Type": "application/json",
+       "Authorization": "Bearer $token",
      }).then((onValue){
        print('val is ${json.decode(onValue.body)}');
        return true;

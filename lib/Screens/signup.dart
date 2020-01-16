@@ -215,7 +215,7 @@ class _SignUpState extends State<SignUp> {
                              borderRadius: BorderRadius.all(Radius.circular(2))
                            ),
                            onPressed: (){
-                             _submit(context,emailController,passController,uidController,uidController,auth);
+                             _submit(context,emailController,passController,uidController,nameController,auth);
                            },
                            color: Color(0xFF3DBAF1),
                          child: Padding(
@@ -274,6 +274,7 @@ class _SignUpState extends State<SignUp> {
     
     if (key.currentState.validate()){
       print("success");
+      print('Name as ${name.text}');
     final dd = await  auth.signUp(name.text,email.text,uid.text,pass.text);
      setState(() {
        isSubmitting = false;

@@ -1,7 +1,39 @@
 import 'package:flutter/material.dart';
+import './report.dart';
+import './resolved.dart';
+import './scanner.dart';
+class TabsScren extends StatefulWidget {
+  TabsScren({Key key}) : super(key: key);
 
-Widget MyAppBar(BuildContext context){
-  return  AppBar(
+  @override
+  _TabsScrenState createState() => _TabsScrenState();
+}
+
+class _TabsScrenState extends State<TabsScren> {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar:  AppBar(
+          
+          bottom: TabBar(
+            tabs: <Widget>[
+              Tab(
+                icon: Icon(Icons.bug_report),
+                text: 'Report',
+              ),
+              Tab(
+                icon: Icon(Icons.scanner),
+                text: 'Scanner',
+              ),
+              Tab(
+                icon: Icon(Icons.flight),
+                text: 'Resolved',
+              )
+            ],
+
+          ),
           leading:Padding(
             padding: const EdgeInsets.all(10),
             child: Image.asset('assets/logo.png',
@@ -27,7 +59,10 @@ Widget MyAppBar(BuildContext context){
                    }
               },
               itemBuilder: (_)=>[
-                
+                PopupMenuItem(
+                  value: 0,
+                  child: Text('Refresh',style: TextStyle(color: Color(0xFF092D6F)),),
+                ),
                  PopupMenuItem(
                   value: 1,
                   child: Text('Problems',style: TextStyle(color: Color(0xFF092D6F)),),
@@ -51,5 +86,14 @@ Widget MyAppBar(BuildContext context){
               ],
             )
           ],
-        );
+        ),
+        body: TabBarView(
+          children: <Widget>[
+            Report(),
+            Scanner(),
+            Resolved()
+          ],
+        ),
+    ));
+  }
 }

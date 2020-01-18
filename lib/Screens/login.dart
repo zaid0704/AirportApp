@@ -17,6 +17,10 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     final auth = Provider.of<Auth>(context);
     return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Quicksand'
+      ),
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Color(0xFF092D6F),
         body: ListView(

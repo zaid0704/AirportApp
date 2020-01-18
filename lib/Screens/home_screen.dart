@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../handling_data/Auth.dart';
+import './MyAppBar.dart';
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
 
@@ -13,104 +14,107 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
    final auth = Provider.of<Auth>(context);
    Map<String,dynamic> userData = auth.getUserData;
-   
+   List<dynamic> problems= userData['problems'];
+    // 
+   print('Problems are $problems');
     return  MaterialApp(
+      theme: ThemeData(fontFamily: 'Quicksand'),
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.grey,
-        appBar: AppBar(
-          leading:Padding(
-            padding: const EdgeInsets.all(10),
-            child: Image.asset('assets/logo.png',
-          alignment: Alignment.center),
-          ),
-          
-          title: Text('Flight UnderControl',style: TextStyle(color: Colors.white,fontSize: 18),),
-          backgroundColor: Color(0xFF092D6F),
-          centerTitle: true,
-          actions: <Widget>[
-            PopupMenuButton(
-              initialValue: 0,
-              onSelected: (selectedVal){
-                print("$selectedVal");
-                if (selectedVal == 3){
-                 while(Navigator.of(context).canPop())
-                  {
-                    Navigator.of(context).pop();
-                  }}
-                  else if (selectedVal == 1)
-                   {
-                     Navigator.of(context).pushNamed('/problems');
-                   }
-              },
-              itemBuilder: (_)=>[
-                PopupMenuItem(
-                  value: 0,
-                  child: Text('Refresh',style: TextStyle(color: Color(0xFF092D6F)),),
-                ),
-                 PopupMenuItem(
-                  value: 1,
-                  child: Text('Problems',style: TextStyle(color: Color(0xFF092D6F)),),
-                ),
-                 PopupMenuItem(
-                  value: 2,
-                  child: Text('Help',style: TextStyle(color: Color(0xFF092D6F)),),
-                ),
-                 PopupMenuItem(
-                  value: 3,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      
-                       Text('Logout',style: TextStyle(color: Color(0xFF092D6F)),),
-                       Icon(Icons.arrow_right)
-                    ],
-                  )
-                 
-                )
-              ],
-            )
-          ],
-        ),
+        backgroundColor: Color(0xFFE5E5E5),
+        appBar: MyAppBar(context),
 
-        body: ListView(
-          children: <Widget>[
+        body:
             Stack(
           children: <Widget>[
-            Container(
+           Container(
               height:MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
             ),
-            Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            // Text('User Details'),
-            Card(
-              elevation: 6.0,
-              color: Color(0xFFffffff),
-              child: Container(
-                height: 150,
-                width: double.infinity,
-                child: userData == null?Center(child: CircularProgressIndicator(),) 
-                : UserDetails(userData),
-              ),
+            Container(
+              width: double.infinity,
+              height: 130,
+              color: Colors.white,
+              child: userData == null ?Center(child: CircularProgressIndicator(),) :
+              UserDetails(userData),
             ),
-            Stack(
-              children: <Widget>[
-                Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height - 243,
-                color:Color.fromRGBO(240, 240, 240, 100),
-              ),
+            Positioned(
+              top: 130,left: 0,
+              child: 
+              Container(
+                width:MediaQuery.of(context).size.width,
+                 height: MediaQuery.of(context).size.height - 230,
+                // color: Colors.blue,
+                child: ListView.builder(
+                  itemCount: problems.length,
+                  itemBuilder: (ctx,index)=>Card(
+            color: Colors.white,
+            elevation: 10.0,
+            margin: const EdgeInsets.only(left: 15,right: 15,top: 10),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))
+            ),
+            child: Container(
+              height: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(left:15,right: 15,top: 15),
+                        child: Text('Type of Flight  ${problems[index]['uid']}',style: TextStyle(color: Color(0xFF092D6F),fontWeight: FontWeight.bold),),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left:15,right: 15,top: 15),
+                        child: Row(children: <Widget>[
+                      Text('Reported',style: TextStyle(color: Color(0xFFDB3535),fontWeight: FontWeight.bold)),
+                      Icon(Icons.error,color: Color(0xFFDB3535),),
+                      
+                      ],),
+                      ),
+                       
+                      
+                      
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                      
+                        padding: const EdgeInsets.only(left:15,right: 15,top: 15),
+                        child:Text('${problems[index]['problem']}',style:TextStyle(color: Color(0xFF497E96)))
+              
+                      )
+                      
+                    ],
+                  )
+                    ],
+                
+              )
+            ),
+            
+            
+          ),
+                  
+                  
+                )
+              )
+              
+               
+            ),
+           
             Positioned(
               bottom: 0,
-              child: Row(
+              child:    Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                  Container(
-                  width: 110,
-                  height: 80,
+                  width: MediaQuery.of(context).size.width*0.31,
+                  height: 70,
                   color: Color(0xFF092D6F),
                   child:IconButton(
                     icon:Column(
@@ -132,18 +136,22 @@ class _HomeScreenState extends State<HomeScreen> {
                    GestureDetector(
                  
                   child:   Container(
-                    width: 140,
-                    height: 100,
+                    width: MediaQuery.of(context).size.width*0.38,
+                    height: 84,
                     color:  Color(0xFF3DBAF1),
                     child:Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        
+                        SizedBox(height: 2,),
                         Image.asset('assets/scanner.png',fit: BoxFit.cover,
                         width: 50,
                         height: 50,),
                         SizedBox(height: 4,),
-                        Text('Scanner',style: TextStyle(color: Colors.white),)
+                        Text('Scanner',style: TextStyle(color: Color(0xFF092D6F)),),
+                        SizedBox(height: 2,),
+                        Container(height: 2,
+                        width: MediaQuery.of(context).size.width*0.38-20,
+                        color: Colors.white,)
                       ],
                     ),
                   ),
@@ -156,8 +164,8 @@ class _HomeScreenState extends State<HomeScreen> {
                GestureDetector(
                 
                 child: Container(
-                  width: 110,
-                  height: 80,
+                  width: MediaQuery.of(context).size.width*0.31,
+                  height: 70,
                   color:Color(0xFF092D6F),
                   child:  Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -175,16 +183,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               ],
             ) ,
-            ),
-          
-              ],
-            ),
-          ],
-        ),
+            )
           ],
         )
-          ],
-        )
+        
+         
         
         
       ),

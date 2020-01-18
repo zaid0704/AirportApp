@@ -17,11 +17,13 @@ class _ReportState extends State<Report> {
   TextEditingController addrController = TextEditingController();
   TextEditingController problemController = TextEditingController();
   TextEditingController uidController = TextEditingController();
+  bool isreported= false;
   Widget build(BuildContext context) {
   final auth = Provider.of<Auth>(context);
   final userUid = auth.userUid;
   final _token =auth.token;
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'Quicksand'),
       home: Scaffold(
         appBar: MyAppBar(context),
         backgroundColor: Colors.white,
@@ -194,7 +196,8 @@ class _ReportState extends State<Report> {
                  _submit(partController.text,addrController.text,uidController.text,problemController.text,userUid,_token);
                },
                textColor: Color(0xFF092D6F),
-               child: Text('Submit'),
+               child: isreported?Center(child: CircularProgressIndicator(),)
+               : Text('Submit'),
                  ),
               ),
             )
@@ -217,7 +220,9 @@ class _ReportState extends State<Report> {
    
   }
    Future _submit(String part,String addr , String uid ,String problem,String userUid,String token)async{
-    
+    setState(() {
+      isreported = true;
+    });
     final bool d = await http.get(
     Uri.parse('https://sih2020jss.herokuapp.com/report/$uid'),
      headers: {
@@ -244,11 +249,12 @@ class _ReportState extends State<Report> {
         http.post(
     Uri.parse('https://sih2020jss.herokuapp.com/report'),
         body:json.encode({
-           'uid':uid,
+          'uid':uid,
           'name':part,
           'address':addr,
           'problem':problem,
-          'person':userUid
+          'Authorization': 'Bearer $token',
+          // 'person':userUid
       }),
      headers: {
        "Accept":"application/json",
@@ -260,6 +266,10 @@ class _ReportState extends State<Report> {
      }).catchError((onError){
        print('Eoor${onError}');
        return false;
+     });
+     setState(() {
+       isreported = false;
+       Navigator.of(context).pop();
      });
       }
    }

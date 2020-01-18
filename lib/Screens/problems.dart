@@ -51,14 +51,23 @@ class _ProblemsState extends State<Problems> {
         backgroundColor: Color(0xFFE5E5E5),
         appBar: MyAppBar(context),
         body:isLoading?Center(child: CircularProgressIndicator(),)
-        : ListView.builder(
+        :
+        ListView.builder(
+           
           itemCount: problems.length,
-          itemBuilder: (ctx,index)=>Card(
+          itemBuilder: (ctx,index)=>
+          
+            ListView.builder(
+            shrinkWrap: true,
+            physics: ClampingScrollPhysics(),
+            itemCount: problems[index]['problems'].length,
+            itemBuilder: (ctx,i)=>Card(
+              
             color: Colors.white,
             elevation: 10.0,
             margin: const EdgeInsets.only(left: 15,right: 15,top: 10),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20))
+            borderRadius: BorderRadius.all(Radius.circular(20))
             ),
             child: Container(
               height: 100,
@@ -91,7 +100,7 @@ class _ProblemsState extends State<Problems> {
                       Padding(
                       
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
-                        child:Text('${problems[index]['problem']}',style:TextStyle(color: Color(0xFF497E96)))
+                        child:Text('${problems[index]['problems'][i]['problem']}',style:TextStyle(color: Color(0xFF497E96)))
               
                       )
                       
@@ -103,8 +112,18 @@ class _ProblemsState extends State<Problems> {
             ),
             
             
-          )
+          ),
+          ),
+          
+           
+          
+         
         ),
+          
+        
+       
+        
+         
       ),
     );
   }

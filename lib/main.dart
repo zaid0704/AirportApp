@@ -1,5 +1,7 @@
-import './Screens/scanner.dart';
+import 'package:airport_app/Screens/TabsScreen.dart';
 
+import './Screens/scanner.dart';
+import './Screens/TabsScreen.dart';
 import './Screens/home_screen.dart';
 import './Screens/resolved.dart';
 import './Screens/login.dart';
@@ -27,7 +29,10 @@ class MyApp extends StatelessWidget {
       ],
       child:
     MaterialApp(
-    
+      theme: ThemeData(
+        fontFamily: 'Quicksand'
+      ),
+    debugShowCheckedModeBanner: false,
          routes: {
         '/login':(ctx)=>Login(),
         '/homeScreen':(ctx)=>HomeScreen(),
@@ -36,7 +41,7 @@ class MyApp extends StatelessWidget {
         '/resolved':(ctx)=>Resolved(),
         '/problems':(ctx)=>Problems()
       },
-      home:Login()
+      home:SignUp()
     ),);
   }
 }

@@ -94,7 +94,7 @@ class _ResolvedState extends State<Resolved> {
                        children: <Widget>[
                          Padding(
                            padding: const EdgeInsets.only(left: 30,right: 30,bottom: 20),
-                           child: Text('UID Equipment' ,style:TextStyle( color:Color(0xFF474747),fontWeight: FontWeight.bold),),
+                           child: Text('UID of Part' ,style:TextStyle( color:Color(0xFF474747),fontWeight: FontWeight.bold),),
                          ),
                             
                        ],

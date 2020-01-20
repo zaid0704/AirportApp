@@ -41,7 +41,7 @@ class _ReportState extends State<Report> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(left: 30,bottom: 10,top: 30),
-                  child: Text('Name of the part',style: TextStyle(color: Color(0xFF474747),fontWeight: FontWeight.bold),),
+                  child: Text('Name of the part UID',style: TextStyle(color: Color(0xFF474747),fontWeight: FontWeight.bold),),
                 )
                 
               ],
@@ -261,7 +261,35 @@ class _ReportState extends State<Report> {
        "Content-Type": "application/json",
        "Authorization": "Bearer $token",
      }).then((onValue){
-       print('val is ${json.decode(onValue.body)}');
+       print('Post is ${json.decode(onValue.body)}');
+       return true;
+     }).catchError((onError){
+       print('Eoor${onError}');
+       return false;
+     });
+     setState(() {
+       isreported = false;
+       Navigator.of(context).pop();
+     });
+      }
+
+      else {
+        http.put(
+    Uri.parse('https://sih2020jss.herokuapp.com/report'),
+        body:json.encode({
+          'uid':uid,
+          'name':part,
+          'address':addr,
+          'problem':problem,
+          'Authorization': 'Bearer $token',
+          // 'person':userUid
+      }),
+     headers: {
+       "Accept":"application/json",
+       "Content-Type": "application/json",
+       "Authorization": "Bearer $token",
+     }).then((onValue){
+       print('Put is ${json.decode(onValue.body)}');
        return true;
      }).catchError((onError){
        print('Eoor${onError}');

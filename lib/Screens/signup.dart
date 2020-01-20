@@ -268,11 +268,12 @@ class _SignUpState extends State<SignUp> {
   }
   void _submit(BuildContext context,TextEditingController email,TextEditingController pass,TextEditingController uid,TextEditingController name,Auth auth)async{
     key.currentState.save();
-    setState(() {
-      isSubmitting = true;
-    });
+    
     
     if (key.currentState.validate()){
+      setState(() {
+      isSubmitting = true;
+    });
       print("success");
       print('Name as ${name.text}');
     final dd = await  auth.signUp(name.text,email.text,uid.text,pass.text);

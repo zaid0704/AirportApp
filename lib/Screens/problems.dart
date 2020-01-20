@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:provider/provider.dart';
 import '../handling_data/Auth.dart';
 import './MyAppBar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 class Problems extends StatefulWidget {
   Problems({Key key}) : super(key: key);
 
@@ -70,10 +71,19 @@ class _ProblemsState extends State<Problems> {
             borderRadius: BorderRadius.all(Radius.circular(20))
             ),
             child: Container(
-              height: 100,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              height: 130,
+              child:Row(
+                 mainAxisAlignment: MainAxisAlignment.start,
+                 children: <Widget>[
+                   Container(
+                    child: SvgPicture.asset('assets/myImage.svg',
+                    width: 30,),
+                  ),
+                 Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -83,7 +93,14 @@ class _ProblemsState extends State<Problems> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
-                        child: Row(children: <Widget>[
+                        child: problems[index]['problems'][i]['resolve']?Row(children: <Widget>[
+                      
+                      Text('Resolved',style: TextStyle(color: Color(0xFF6BD25A),fontWeight: FontWeight.bold)),
+                      Icon(Icons.check,color: Color(0xFF6BD25A),),
+                      
+                      ],):
+                        Row(children: <Widget>[
+                      
                       Text('Reported',style: TextStyle(color: Color(0xFFDB3535),fontWeight: FontWeight.bold)),
                       Icon(Icons.error,color: Color(0xFFDB3535),),
                       
@@ -100,15 +117,24 @@ class _ProblemsState extends State<Problems> {
                       Padding(
                       
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
-                        child:Text('${problems[index]['problems'][i]['problem']}',style:TextStyle(color: Color(0xFF497E96)))
+                        child:Text('Problem: ${problems[index]['problems'][i]['problem']}',style:TextStyle(color: Color(0xFF497E96)))
               
                       )
                       
                     ],
-                  )
+                  ),
+                  Padding(
+                      
+                        padding: const EdgeInsets.only(left:15,right: 15,top: 15),
+                        child:Text('Uid: ${problems[index]['problems'][i]['person']}',style:TextStyle(color: Color(0xFF497E96)))
+              
+                      )
                     ],
                 
               )
+                 ],
+              ),
+
             ),
             
             

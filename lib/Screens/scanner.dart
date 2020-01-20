@@ -20,7 +20,7 @@ class _ScannerState extends State<Scanner> {
 
   Future _getEquipData(String token)async{
   final http.Response response = await http.get(
-      Uri.parse('http://sih2020jss.herokuapp.com/component/743'),
+      Uri.parse('http://sih2020jss.herokuapp.com/component/$cameraScanResult'),
        headers: {
        "Accept":"application/json",
        "Content-Type": "application/json",
@@ -100,23 +100,59 @@ class _ScannerState extends State<Scanner> {
               width: double.infinity,
               height: MediaQuery.of(context).size.height - 155,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Color(0xFFE5E5E5),
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(75),
                 topRight: Radius.circular(75))
               ),
               child: ListView.builder(
-                itemCount: 5,
+                itemCount: equipDetails['problems'].length,
                 itemBuilder: (context,index)=>
                 Card(
                   margin: const EdgeInsets.only(left:15,right: 15,top: 10),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)
                   ),
-                  color: Color(0xFFE5E5E5),
+                  color: Color(0xFFFFFFFF),
                   child: Container(
                     width: MediaQuery.of(context).size.width - 20,
                     height: 150,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Padding(
+                        padding: const EdgeInsets.only(left:15,right: 15,top: 15),
+                        child: Text('Type of Flight  ${equipDetails['uid']}',style: TextStyle(color: Color(0xFF092D6F),fontWeight: FontWeight.bold),),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left:15,right: 15,top: 15),
+                        child: Row(children: <Widget>[
+                      Text('Reported',style: TextStyle(color: Color(0xFFDB3535),fontWeight: FontWeight.bold)),
+                      Icon(Icons.error,color: Color(0xFFDB3535),),
+                      
+                      ],),
+                      ),
+                          ],
+                        ),
 
+                        // Problems
+                        Padding(
+                          padding: const EdgeInsets.only(left:15,right: 15,bottom: 10),
+                          child: Text('Problem: ${equipDetails['problems'][index]['problem']}',
+                        style: TextStyle(color: Color(0xFF497E96)),),
+                        ),
+
+                         Padding(
+                          padding: const EdgeInsets.only(left:15,right: 15,bottom: 10),
+                          child: Text('Name of Part: ${equipDetails['name']}',
+                        style: TextStyle(color: Color(0xFF497E96)),),
+                        )
+                        
+                      ],
+                    ),
                   ),
                 ),
               ),

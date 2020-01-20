@@ -26,6 +26,7 @@ dependencies:
   provider: ^3.1.0+1
   http: ^0.12.0+4
   qrscan: ^0.2.17
+  flutter_svg: ^0.16.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -47,8 +48,11 @@ flutter:
    - assets/scanner_background.png
    - assets/logo.png
    - assets/scanner.png
-   - assets/card_background.png
+   - assets/card_back.png
    - assets/card.png
+   - assets/myImage.svg
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -164,10 +164,11 @@ class _LoginState extends State<Login> {
   }
   void _submit(BuildContext context,TextEditingController uid, TextEditingController pass , Auth auth)async{
     key.currentState.save();
-    setState(() {
+    
+    if(key.currentState.validate()){
+      setState(() {
       isSubmitting=true;
     });
-    if(key.currentState.validate()){
       print("success login");
       final d = await auth.login(uid.text,pass.text);
       setState(() {

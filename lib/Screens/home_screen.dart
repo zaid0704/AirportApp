@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../handling_data/Auth.dart';
 import './MyAppBar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
 
@@ -50,29 +51,47 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (ctx,index)=>Card(
             color: Colors.white,
             elevation: 10.0,
-            margin: const EdgeInsets.only(left: 15,right: 15,top: 10),
+            margin: const EdgeInsets.only(left: 18,right: 18,top: 13),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))
             ),
             child: Container(
-              height: 100,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              height: 130,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                
+                children: <Widget>[
+                  Container(
+                    child: SvgPicture.asset('assets/myImage.svg',
+                    width: 30,),
+                  ),
+                  Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
+/// ),
+//                       ),
                       Padding(
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
                         child: Text('Type of Flight  ${problems[index]['uid']}',style: TextStyle(color: Color(0xFF092D6F),fontWeight: FontWeight.bold),),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
-                        child: Row(children: <Widget>[
+                        child: !problems[index]['resolve']?Row(children: <Widget>[
+                      
+                      Text('Resolved',style: TextStyle(color: Color(0xFF6BD25A),fontWeight: FontWeight.bold)),
+                      Icon(Icons.check,color: Color(0xFF6BD25A),),
+                      
+                      ],):
+                        Row(children: <Widget>[
+                      
                       Text('Reported',style: TextStyle(color: Color(0xFFDB3535),fontWeight: FontWeight.bold)),
                       Icon(Icons.error,color: Color(0xFFDB3535),),
                       
-                      ],),
+                      ],)
                       ),
                        
                       
@@ -85,15 +104,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                       
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
-                        child:Text('${problems[index]['problem']}',style:TextStyle(color: Color(0xFF497E96)))
+                        child:Text('Problem: ${problems[index]['problem']}',style:TextStyle(color: Color(0xFF497E96)))
               
                       )
                       
                     ],
-                  )
+                  ),
+                  Padding(
+                      
+                        padding: const EdgeInsets.only(left:15,right: 15,top: 15),
+                        child:Text('Uid : ${problems[index]['person']}',style:TextStyle(color: Color(0xFF497E96)))
+              
+                      )
                     ],
                 
               )
+                ],
+              ),
+              
             ),
             
             
@@ -217,8 +245,21 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             Text('${userData['item']['name']}',style: TextStyle(color: Color(0xFF000000),fontWeight: FontWeight.bold,fontSize: 22),),
             Text('${userData['item']['email']}',style: TextStyle(color: Color(0xFF000000)),),
-            Text('${userData['item']['uid']}',style: TextStyle(color: Color(0xFF000000)),),
-
+            // Text('${userData['item']['uid']}',style: TextStyle(color: Color(0xFF000000)),),
+            // Text('hello'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 0,right: 10,top: 8),
+                  child: Text('Reported: 78',style: TextStyle(color: Color(0xFF092D6F),fontSize: 16),),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15,right: 10,top: 8),
+                  child: Text('Resolved: 56',style: TextStyle(color: Color(0xFF092D6F),fontSize: 16),),
+                )
+              ],
+            )
           ],
         )
       ],

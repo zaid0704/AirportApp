@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:provider/provider.dart';
 import '../handling_data/Auth.dart';
 import './MyAppBar.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 class Report extends StatefulWidget {
   Report({Key key}) : super(key: key);
 
@@ -18,6 +19,18 @@ class _ReportState extends State<Report> {
   TextEditingController problemController = TextEditingController();
   TextEditingController uidController = TextEditingController();
   bool isreported= false;
+  String cameraResult;
+  Future _scan()async{
+     cameraResult =await scanner.scan();
+    setState(() {
+      cameraResult = cameraResult;
+    });}
+    @override
+    void initState() { 
+      super.initState();
+      _scan();
+    }
+ 
   Widget build(BuildContext context) {
   final auth = Provider.of<Auth>(context);
   final userUid = auth.userUid;
@@ -37,13 +50,17 @@ class _ReportState extends State<Report> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 30,bottom: 10,top: 30),
-                  child: Text('Name of the part UID',style: TextStyle(color: Color(0xFF474747),fontWeight: FontWeight.bold),),
+               
+                    Padding(
+                  padding: const EdgeInsets.only(left: 30,bottom: 18,top: 25),
+                  child:cameraResult == null?Center(child: CircularProgressIndicator(),)
+                   :Text('UID of Equipment: ${cameraResult} ',style: TextStyle(color: Color(0xFF092D6F),fontWeight: FontWeight.bold,fontSize: 16),),
                 )
-                
+         
+                  
+                       
               ],
             ),
          
@@ -55,34 +72,7 @@ class _ReportState extends State<Report> {
                   //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                      Padding(
-                     padding: const EdgeInsets.only(left: 30,right: 30,bottom: 20),
-                      child:  TextFormField(
-                        keyboardType: TextInputType.text,
-                        controller: partController,
-                        style: TextStyle(fontFamily: 'Quicksand',fontSize: 18,color: Color(0xFF474747) ),
-                        
-                        validator: (val){
-                          if (val.isEmpty )
-                           {
-                             return 'Invalid part';
-                           
-                           }
-                        },
-                      decoration: InputDecoration(
-                         filled: true,
-                        fillColor: Color.fromRGBO(240, 240, 240, 100),
-                       
-               
-                     hintStyle: TextStyle(color:  Color(0xFF474747),fontFamily: 'Quicksand',fontWeight: FontWeight.bold,),
-                      
-                        labelStyle: TextStyle(fontFamily: 'Quicksand',fontSize: 14,color: Color(0xFFBBBBBB)),
-                        labelText: 'eg. label front tyres',
-                        // helperText: 'abc0000@gmail.com',
-                        helperStyle: TextStyle(fontFamily: 'Quciksand',color: Colors.yellow),
-                      ),
-                    ),
-                    ),
+              
 
                      Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -137,7 +127,7 @@ class _ReportState extends State<Report> {
                        children: <Widget>[
                          Padding(
                            padding: const EdgeInsets.only(left: 30,right: 30,bottom: 20),
-                           child: Text('UID Equipment' ,style:TextStyle( color:Color(0xFF474747),fontWeight: FontWeight.bold),),
+                           child: Text('Name of the part' ,style:TextStyle( color:Color(0xFF474747),fontWeight: FontWeight.bold),),
                          ),
                             
                        ],
@@ -187,21 +177,27 @@ class _ReportState extends State<Report> {
             maxLines: 10,
           ),
                     ),
-         Expanded(
-              child: ButtonTheme(
-               minWidth: double.infinity-20,
-              child: RaisedButton(
-               color: Color(0xFF3DBAF1),
+         
+              ButtonTheme(
+             minWidth: double.infinity,
+             height: 45,
+             child:Padding(
+               padding: const EdgeInsets.all(30),
+               child: RaisedButton(
+                 elevation: 4.0,
                onPressed: (){
-                 _submit(partController.text,addrController.text,uidController.text,problemController.text,userUid,_token);
+                 _submit(cameraResult,addrController.text,uidController.text,problemController.text,userUid,_token);
+            
                },
-               textColor: Color(0xFF092D6F),
-               child: isreported?Center(child: CircularProgressIndicator(),)
-               : Text('Submit'),
-                 ),
-              ),
-            )
-                ,
+               color: Color(0xFF3DBAF1),
+               child:  isreported?Center(child: CircularProgressIndicator(),):
+               Text('Report',style: TextStyle(color: Color(0xFF092D6F),fontSize: 18),),
+             ),
+             ),
+              
+           )
+          
+                
                         
               
           ],

@@ -59,11 +59,11 @@ class _LoginState extends State<Login> {
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                       Padding(
-                     padding: const EdgeInsets.only(left: 30,right: 30,bottom: 20),
+                     padding: const EdgeInsets.only(left: 30,right: 30,bottom: 15),
                       child:  TextFormField(
                         keyboardType: TextInputType.text,
                         controller: uidController,
-                        style: TextStyle(fontFamily: 'Quicksand',fontSize: 18,color: Colors.white),
+                        style: TextStyle(fontFamily: 'Quicksand',fontSize: 14,color: Colors.white),
                         
                         validator: (val){
                           if (val.isEmpty )
@@ -85,8 +85,8 @@ class _LoginState extends State<Login> {
                       borderRadius: BorderRadius.all(Radius.circular(2.0)),
                       borderSide: BorderSide(color: Color(0xFF20417D)),
                ),
-                        labelStyle: TextStyle(fontFamily: 'Quicksand',fontSize: 15,color: Colors.white,fontWeight: FontWeight.bold),
-                        labelText: 'Unique Id number',
+                        labelStyle: TextStyle(fontFamily: 'Quicksand',fontSize: 14,color: Color(0xFF8FA0BE)),
+                        labelText: '  Unique Id number',
                         // helperText: 'abc0000@gmail.com',
                         helperStyle: TextStyle(fontFamily: 'Quciksand',color: Colors.yellow),
                       ),
@@ -98,7 +98,7 @@ class _LoginState extends State<Login> {
                       child:  TextFormField(
                         keyboardType: TextInputType.emailAddress,
                         controller: passController,
-                        style: TextStyle(fontFamily: 'Quicksand',fontSize: 14,color: Colors.white),
+                        style: TextStyle(fontFamily: 'Quicksand',fontSize: 14,color:Colors.white),
                         
                         validator: (val){
                           if (val.isEmpty )
@@ -115,22 +115,26 @@ class _LoginState extends State<Login> {
                    borderSide: BorderSide(color: Color(0xFF20417D)),
                    ), 
                
-                hintStyle: TextStyle(color: Colors.white,fontFamily: 'Quicksand',fontWeight: FontWeight.bold),
+                hintStyle: TextStyle(color: Colors.white,fontFamily: 'Quicksand'),
                focusedBorder: OutlineInputBorder(
                borderRadius: BorderRadius.all(Radius.circular(2.0)),
                borderSide: BorderSide(color: Color(0xFF20417D)),
         ),
-                        labelStyle: TextStyle(fontFamily: 'Quicksand',fontSize: 14,color: Colors.white,fontWeight: FontWeight.bold),
-                        labelText: 'Password',
-                        // helperText: 'abc0000@gmail.com',
-                        // helperStyle: TextStyle(fontFamily: 'Quciksand',color: Colors.yellow),
+                        labelStyle: TextStyle(fontFamily: 'Quicksand',fontSize: 14,color: Color(0xFF8FA0BE)),
+                        labelText: '  Password',
+                        // helperText: '  Password',
+                        // helperStyle: TextStyle(fontFamily: 'Quciksand',fontSize: 14,color: Color(0xFF8FA0BE)),
                       ),
                     ),
                     ),
                    
 
                   isSubmitting?CircularProgressIndicator():
-                 Row(
+                  ButtonTheme(
+                    minWidth: double.infinity,
+                    height: 50,
+
+                    child:   Row(
                    children: <Widget>[
                      Expanded(
                        child: Padding(
@@ -143,13 +147,15 @@ class _LoginState extends State<Login> {
                              _submit(context,uidController,passController,auth);
                            } ,
                            color: Color(0xFF3DBAF1),
-                         child: Text('Login',style: TextStyle(color: Color(0xFF092D6F),fontSize: 14),),
+                         child: Text('Login',style: TextStyle(color: Color(0xFF092D6F),fontSize: 14,fontWeight: FontWeight.bold),),
                        ),
                        )
                        
                      )
                    ],
                  )
+                  ),
+               
                     
                     
                   ],
@@ -176,8 +182,25 @@ class _LoginState extends State<Login> {
       });
       if(d)
       Navigator.of(context).pushNamed('/homeScreen');
-      else
-      print('login failed');
+      else{
+        print('login failed');
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (ctx)=> AlertDialog(
+          title: Text('Login Failed ',style: TextStyle(color:Color(0xFF092D6F))),
+          content: Text('Wrong Uid or Password ',style: TextStyle(color:Color(0xFF092D6F)),),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: (){Navigator.of(context).pop();},
+            )
+          ],
+        )
+        );
+       
+      }
+      
     }
   }
 }

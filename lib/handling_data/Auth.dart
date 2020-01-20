@@ -67,7 +67,18 @@ Future<bool> login(String uiid,String password)async{
        "Content-Type": "application/json"
      }).then((onValue){
        print('val is ${json.decode(onValue.body)}');
-       userData = json.decode(onValue.body);
+
+
+       // checking is login actually succeded
+       
+        userData = json.decode(onValue.body);
+
+        if (userData['message']=='Password Incorrect')
+         {
+           notifyListeners();
+           print('Detected');
+           return false;
+         }
        _token = json.decode(onValue.body)['token'];
        print('Token is $_token');
        notifyListeners();

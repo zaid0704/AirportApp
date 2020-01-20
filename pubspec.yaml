@@ -50,7 +50,10 @@ flutter:
    - assets/scanner.png
    - assets/card_back.png
    - assets/card.png
-   - assets/myImage.svg
+   - assets/carrds.svg
+   - assets/check_mark.svg 
+   - assets/help.svg 
+
 
 
 
@@ -71,10 +74,13 @@ flutter:
         - asset: assets/fonts/Quicksand-Regular.ttf
         - asset: assets/fonts/Quicksand-Bold.ttf
           weight: 700
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+    - family: Poppins 
+      fonts: 
+        - asset: assets/fonts/Poppins-Bold.ttf
+        - asset: assets/fonts/Poppins-Medium.ttf
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+        
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

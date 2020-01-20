@@ -11,6 +11,7 @@ import './handling_data/Auth.dart';
 import './Screens/signup.dart';
 import './Screens/report.dart';
 import './Screens/problems.dart';
+import './Screens/help.dart';
 // void main() => runApp(SignUp());
 // void main() => runApp(Login());
 // void main() => runApp(MyApp());
@@ -39,9 +40,10 @@ class MyApp extends StatelessWidget {
         '/scanner':(ctx)=>Scanner(),
         '/report':(ctx)=>Report(),
         '/resolved':(ctx)=>Resolved(),
-        '/problems':(ctx)=>Problems()
+        '/problems':(ctx)=>Problems(),
+        '/help':(ctx)=>Help()
       },
-      home:SignUp()
+      home:Login()
     ),);
   }
 }

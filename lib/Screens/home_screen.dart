@@ -34,26 +34,26 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Container(
               width: double.infinity,
-              height: 130,
+              height: 100,
               color: Colors.white,
               child: userData == null ?Center(child: CircularProgressIndicator(),) :
               UserDetails(userData),
             ),
             Positioned(
-              top: 130,left: 0,
+              top: 100,left: 0,
               child: 
               Container(
                 width:MediaQuery.of(context).size.width,
-                 height: MediaQuery.of(context).size.height - 230,
+                 height: MediaQuery.of(context).size.height - 200,
                 // color: Colors.blue,
                 child: ListView.builder(
                   itemCount: problems.length,
                   itemBuilder: (ctx,index)=>Card(
             color: Colors.white,
-            elevation: 10.0,
+            elevation: 2.0,
             margin: const EdgeInsets.only(left: 18,right: 18,top: 13),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20))
+              borderRadius: BorderRadius.all(Radius.circular(6))
             ),
             child: Container(
               height: 130,
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 
                 children: <Widget>[
                   Container(
-                    child: SvgPicture.asset('assets/myImage.svg',
+                    child: SvgPicture.asset('assets/carrds.svg',
                     width: 30,),
                   ),
                   Column(
@@ -70,20 +70,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
 /// ),
 //                       ),
                       Padding(
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
-                        child: Text('Type of Flight  ${problems[index]['uid']}',style: TextStyle(color: Color(0xFF092D6F),fontWeight: FontWeight.bold),),
+                        child: Text('Type of Flight  ${problems[index]['uid']}',style: TextStyle(color: Color(0xFF092D6F),fontWeight: FontWeight.bold,fontSize: 14,fontFamily: 'Poppins'),),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
                         child: !problems[index]['resolve']?Row(children: <Widget>[
-                      
+                      Container(
+                        width: 13,
+                        height: 13,
+                        child:  SvgPicture.asset('assets/check_mark.svg',fit:BoxFit.cover),
+                      ),
+                     
                       Text('Resolved',style: TextStyle(color: Color(0xFF6BD25A),fontWeight: FontWeight.bold)),
-                      Icon(Icons.check,color: Color(0xFF6BD25A),),
+                      
                       
                       ],):
                         Row(children: <Widget>[
@@ -103,19 +108,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: <Widget>[
                       Padding(
                       
-                        padding: const EdgeInsets.only(left:15,right: 15,top: 15),
-                        child:Text('Problem: ${problems[index]['problem']}',style:TextStyle(color: Color(0xFF497E96)))
+                        padding: const EdgeInsets.only(left:15,right: 15,top: 7),
+                        child:Text('Problem: ${problems[index]['problem']}',style:TextStyle(color: Color(0xFF497E96),fontFamily: 'Poppins',fontWeight: FontWeight.w400,fontSize: 12))
               
                       )
                       
                     ],
                   ),
-                  Padding(
+                
+                     
+                      Padding(
                       
-                        padding: const EdgeInsets.only(left:15,right: 15,top: 15),
-                        child:Text('Uid : ${problems[index]['person']}',style:TextStyle(color: Color(0xFF497E96)))
+                        padding: const EdgeInsets.only(left:15,right: 15,bottom: 5,top: 20),
+                        child:Text('Uid : ${problems[index]['person']}',style:TextStyle(color: Colors.black,fontFamily: 'Poppins',fontWeight: FontWeight.w500,fontSize: 10))
               
                       )
+                    
+                  
+                  
                     ],
                 
               )
@@ -165,21 +175,19 @@ class _HomeScreenState extends State<HomeScreen> {
                  
                   child:   Container(
                     width: MediaQuery.of(context).size.width*0.38,
-                    height: 84,
+                    height: 90,
                     color:  Color(0xFF3DBAF1),
                     child:Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         SizedBox(height: 2,),
                         Image.asset('assets/scanner.png',fit: BoxFit.cover,
-                        width: 50,
-                        height: 50,),
+                        width: 40,
+                        height: 40,),
                         SizedBox(height: 4,),
                         Text('Scanner',style: TextStyle(color: Color(0xFF092D6F)),),
                         SizedBox(height: 2,),
-                        Container(height: 2,
-                        width: MediaQuery.of(context).size.width*0.38-20,
-                        color: Colors.white,)
+                        
                       ],
                     ),
                   ),
@@ -227,10 +235,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        SizedBox(width: 10,),
+        SizedBox(width: 20,),
         Container(
-          width: 70,
-          height: 70,
+          width: 60,
+          height: 60,
           // child: Text('A'),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -243,8 +251,8 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('${userData['item']['name']}',style: TextStyle(color: Color(0xFF000000),fontWeight: FontWeight.bold,fontSize: 22),),
-            Text('${userData['item']['email']}',style: TextStyle(color: Color(0xFF000000)),),
+            Text('${userData['item']['name']}',style: TextStyle(color: Color(0xFF000000),fontSize: 20,fontFamily: 'Poppins',fontWeight: FontWeight.w500 ),),
+            Text('${userData['item']['email']}',style: TextStyle(color: Color(0xFF7B7B7B),fontSize: 11,fontFamily: 'Poppins',fontWeight: FontWeight.w300 )),
             // Text('${userData['item']['uid']}',style: TextStyle(color: Color(0xFF000000)),),
             // Text('hello'),
             Row(
@@ -252,11 +260,11 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(left: 0,right: 10,top: 8),
-                  child: Text('Reported: 78',style: TextStyle(color: Color(0xFF092D6F),fontSize: 16),),
+                  child: Text('Reported: 78',style: TextStyle(color: Color(0xFF092D6F),fontSize: 16,fontFamily: 'Poppins',fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15,right: 10,top: 8),
-                  child: Text('Resolved: 56',style: TextStyle(color: Color(0xFF092D6F),fontSize: 16),),
+                  child: Text('Resolved: 56',style: TextStyle(color: Color(0xFF092D6F),fontFamily: 'Poppins',fontWeight: FontWeight.w500),),
                 )
               ],
             )

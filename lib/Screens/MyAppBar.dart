@@ -25,6 +25,10 @@ Widget MyAppBar(BuildContext context){
                    {
                      Navigator.of(context).pushNamed('/problems');
                    }
+                   else
+                    {
+                      Navigator.of(context).pushNamed('/help');
+                    }
               },
               itemBuilder: (_)=>[
                 

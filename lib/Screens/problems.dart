@@ -48,6 +48,9 @@ class _ProblemsState extends State<Problems> {
     }
      
     return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Poppins'
+      ),
       home: Scaffold(
         backgroundColor: Color(0xFFE5E5E5),
         appBar: MyAppBar(context),
@@ -68,7 +71,7 @@ class _ProblemsState extends State<Problems> {
             elevation: 10.0,
             margin: const EdgeInsets.only(left: 15,right: 15,top: 10),
             shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20))
+            borderRadius: BorderRadius.all(Radius.circular(6))
             ),
             child: Container(
               height: 130,
@@ -91,22 +94,29 @@ class _ProblemsState extends State<Problems> {
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
                         child: Text('Type of Flight  ${problems[index]['uid']}',style: TextStyle(color: Color(0xFF092D6F),fontWeight: FontWeight.bold),),
                       ),
+                      SizedBox(width: 10,),
                       Padding(
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
                         child: problems[index]['problems'][i]['resolve']?Row(children: <Widget>[
-                      
-                      Text('Resolved',style: TextStyle(color: Color(0xFF6BD25A),fontWeight: FontWeight.bold)),
-                      
                       Container(
                         width: 13,
                         height: 13,
                         child:  SvgPicture.asset('assets/check_mark.svg',fit:BoxFit.cover),
                       ),
+                      SizedBox(width: 3,),
+                      Text('Resolved',style: TextStyle(color: Color(0xFF6BD25A),fontWeight: FontWeight.bold)),
+                      
+                      
                       ],):
                         Row(children: <Widget>[
-                      
+                      Container(
+                        width: 13,
+                        height: 13,
+                        child:  SvgPicture.asset('assets/error.svg',fit:BoxFit.cover),
+                      ),
+                       SizedBox(width: 3,),
                       Text('Reported',style: TextStyle(color: Color(0xFFDB3535),fontWeight: FontWeight.bold)),
-                      Icon(Icons.error,color: Color(0xFFDB3535),),
+                      // Icon(Icons.error,color: Color(0xFFDB3535),),
                       
                       ],),
                       ),
@@ -121,8 +131,22 @@ class _ProblemsState extends State<Problems> {
                       Padding(
                       
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
-                        child:Text('Problem: ${problems[index]['problems'][i]['problem']}',style:TextStyle(color: Color(0xFF497E96)))
+                        child:Column(
+                          
+                         children:<Widget>[
+                           Container(
+                            //  color: Colors.pink,
+                             width: MediaQuery.of(context).size.width-100,
+                             height: 40,
+                             child:  Text('Problem: ${problems[index]['problems'][i]['problem']}',style:TextStyle(color: Color(0xFF497E96)))
               
+                          // overflow: TextOverflow.ellipsis,
+                        // maxLines: 2,
+                        // softWrap: true,
+                        )
+                         ]                       
+                        ),
+                       
                       )
                       
                     ],
@@ -130,7 +154,7 @@ class _ProblemsState extends State<Problems> {
                   Padding(
                       
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
-                        child:Text('Uid: ${problems[index]['problems'][i]['person']}',style:TextStyle(color: Color(0xFF497E96)))
+                        child:Text('Uid: ${problems[index]['problems'][i]['person']}',style:TextStyle(color: Color(0xFF497E96),fontWeight: FontWeight.w500,fontSize: 10))
               
                       )
                     ],

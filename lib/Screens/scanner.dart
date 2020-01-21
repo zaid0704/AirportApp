@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:provider/provider.dart';
 import '../handling_data/Auth.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 class Scanner extends StatefulWidget {
   Scanner({Key key}) : super(key: key);
 
@@ -64,6 +65,7 @@ class _ScannerState extends State<Scanner> {
         });
       }
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Quicksand'),
       home: Scaffold(
         backgroundColor: Color(0xFF092D6F) ,
@@ -102,8 +104,8 @@ class _ScannerState extends State<Scanner> {
               height: MediaQuery.of(context).size.height - 155,
               decoration: BoxDecoration(
                 color: Color(0xFFE5E5E5),
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(75),
-                topRight: Radius.circular(75))
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(25),
+                topRight: Radius.circular(25))
               ),
               child: ListView.builder(
                 itemCount: equipDetails['problems'].length,
@@ -116,8 +118,14 @@ class _ScannerState extends State<Scanner> {
                   color: Color(0xFFFFFFFF),
                   child: Container(
                     width: MediaQuery.of(context).size.width - 20,
-                    height: 150,
-                    child: Column(
+                    height: 120,
+                    child: Row(
+                      children: <Widget>[
+                         Container(
+                    child: SvgPicture.asset('assets/carrds.svg',
+                    width: 30,),
+                  ),
+                  Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -130,9 +138,26 @@ class _ScannerState extends State<Scanner> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
-                        child: Row(children: <Widget>[
+                        child: equipDetails['problems'][index]['resolve']?Row(children: <Widget>[
+                      Container(
+                        width: 13,
+                        height: 13,
+                        child:  SvgPicture.asset('assets/check_mark.svg',fit:BoxFit.cover),
+                      ),
+                      SizedBox(width: 3,),
+                      Text('Resolved',style: TextStyle(color: Color(0xFF6BD25A),fontWeight: FontWeight.bold)),
+                      
+                      
+                      ],):
+                        Row(children: <Widget>[
+                      Container(
+                        width: 13,
+                        height: 13,
+                        child:  SvgPicture.asset('assets/error.svg',fit:BoxFit.cover),
+                      ),
+                       SizedBox(width: 3,),
                       Text('Reported',style: TextStyle(color: Color(0xFFDB3535),fontWeight: FontWeight.bold)),
-                      Icon(Icons.error,color: Color(0xFFDB3535),),
+                      // Icon(Icons.error,color: Color(0xFFDB3535),),
                       
                       ],),
                       ),
@@ -140,20 +165,37 @@ class _ScannerState extends State<Scanner> {
                         ),
 
                         // Problems
+
+                        
                         Padding(
-                          padding: const EdgeInsets.only(left:15,right: 15,bottom: 10),
-                          child: Text('Problem: ${equipDetails['problems'][index]['problem']}',
+                          padding: const EdgeInsets.only(left:15,right: 15,top: 10),
+                          child: Container(
+                            //  color: Colors.pink,
+                             width: MediaQuery.of(context).size.width-100,
+                             height: 40,
+                            //  child:  Text('Problem: ${problems[index]['problems'][i]['problem']}',style:TextStyle(color: Color(0xFF497E96)))
+              
+                          // overflow: TextOverflow.ellipsis,
+                        // maxLines: 2,
+                        // softWrap: true,
+                        // )
+                          
+                       child:   Text('Problem: ${equipDetails['problems'][index]['problem']}',
                         style: TextStyle(color: Color(0xFF497E96)),),
+                        ),
                         ),
 
                          Padding(
                           padding: const EdgeInsets.only(left:15,right: 15,bottom: 10),
                           child: Text('Name of Part: ${equipDetails['name']}',
-                        style: TextStyle(color: Color(0xFF497E96)),),
+                        style: TextStyle(color: Colors.black,fontSize: 11),),
                         )
                         
                       ],
                     ),
+                      ],
+                    ),
+                    
                   ),
                 ),
               ),

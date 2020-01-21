@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 Widget MyAppBar(BuildContext context){
   return  AppBar(
           leading:Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.only(left: 15),
             child: Image.asset('assets/logo.png',
           alignment: Alignment.center),
           ),

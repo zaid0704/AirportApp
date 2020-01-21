@@ -40,7 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
               UserDetails(userData),
             ),
             Positioned(
-              top: 100,left: 0,
+              top: 106,
+              left: 25,
+              child: Text('Past Records',style: TextStyle(color: Color(0xFF000000),fontSize: 15,fontWeight: FontWeight.bold,fontFamily: 'Quicksand'),),
+            ),
+            Positioned(
+              top: 118,left: 0,
               child: 
               Container(
                 width:MediaQuery.of(context).size.width,
@@ -135,16 +140,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         // maxLines: 2,
                         // softWrap: true,
                         )
-                         ]
-                         
+                         ]                       
                         ),
-                        
-              
+                    
                       ),
-                      
-                   
-                
-                     
                       Padding(
                       
                         padding: const EdgeInsets.only(left:15,right: 15,bottom: 5,top: 20),

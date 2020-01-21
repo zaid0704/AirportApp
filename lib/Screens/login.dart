@@ -18,7 +18,7 @@ class _LoginState extends State<Login> {
     final auth = Provider.of<Auth>(context);
     return MaterialApp(
       theme: ThemeData(
-        fontFamily: 'Quicksand'
+        fontFamily: 'Poppins'
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -99,7 +99,7 @@ class _LoginState extends State<Login> {
                         keyboardType: TextInputType.emailAddress,
                         controller: passController,
                         style: TextStyle(fontFamily: 'Quicksand',fontSize: 14,color:Colors.white),
-                        
+                        obscureText: true,
                         validator: (val){
                           if (val.isEmpty )
                            {
@@ -147,7 +147,7 @@ class _LoginState extends State<Login> {
                              _submit(context,uidController,passController,auth);
                            } ,
                            color: Color(0xFF3DBAF1),
-                         child: Text('Login',style: TextStyle(color: Color(0xFF092D6F),fontSize: 14,fontWeight: FontWeight.bold),),
+                         child: Text('Login',style: TextStyle(color: Color(0xFF092D6F),fontSize: 14,fontWeight: FontWeight.w600),),
                        ),
                        )
                        

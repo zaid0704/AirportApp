@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import '../handling_data/Auth.dart';
 import './report.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 class Report_prev extends StatefulWidget {
   Report_prev({Key key}) : super(key: key);
 
@@ -66,6 +67,7 @@ class _Report_prevState extends State<Report_prev> {
         });
       }
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home:  Scaffold(
         backgroundColor: Color(0xFF092D6F) ,
         // body:isLoading?Center(child: CircularProgressIndicator()):
@@ -95,7 +97,7 @@ class _Report_prevState extends State<Report_prev> {
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(15),
-                child: Text('Report',style: TextStyle(color: Colors.white,fontSize: 18),),
+                child: Text('Resolve',style: TextStyle(color: Colors.white,fontSize: 18,fontFamily: 'Quicksand',fontWeight: FontWeight.w400),),
               ),
             ),
             Container(
@@ -104,7 +106,7 @@ class _Report_prevState extends State<Report_prev> {
               decoration: BoxDecoration(
                 color: Color(0xFFE5E5E5),
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(75),
-                topRight: Radius.circular(75))
+                topRight: Radius.circular(50))
               ),
               child: ListView.builder(
                 itemCount: equipDetails['problems'].length,
@@ -123,8 +125,14 @@ class _Report_prevState extends State<Report_prev> {
                   color: Color(0xFFFFFFFF),
                   child: Container(
                     width: MediaQuery.of(context).size.width - 20,
-                    height: 150,
-                    child: Column(
+                    height: 120,
+                    child:Row(
+                      children: <Widget>[
+                        Container(
+                    child: SvgPicture.asset('assets/carrds.svg',
+                    width: 30,),
+                  ),
+                  Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -135,11 +143,29 @@ class _Report_prevState extends State<Report_prev> {
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
                         child: Text('Type of Flight  ${equipDetails['uid']}',style: TextStyle(color: Color(0xFF092D6F),fontWeight: FontWeight.bold),),
                       ),
-                      Padding(
+                      SizedBox(width: 10,),
+                         Padding(
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
-                        child: Row(children: <Widget>[
+                        child: equipDetails['problems'][index]['resolve']?Row(children: <Widget>[
+                      Container(
+                        width: 13,
+                        height: 13,
+                        child:  SvgPicture.asset('assets/check_mark.svg',fit:BoxFit.cover),
+                      ),
+                      SizedBox(width: 3,),
+                      Text('Resolved',style: TextStyle(color: Color(0xFF6BD25A),fontWeight: FontWeight.bold)),
+                      
+                      
+                      ],):
+                        Row(children: <Widget>[
+                      Container(
+                        width: 13,
+                        height: 13,
+                        child:  SvgPicture.asset('assets/error.svg',fit:BoxFit.cover),
+                      ),
+                       SizedBox(width: 3,),
                       Text('Reported',style: TextStyle(color: Color(0xFFDB3535),fontWeight: FontWeight.bold)),
-                      Icon(Icons.error,color: Color(0xFFDB3535),),
+                      // Icon(Icons.error,color: Color(0xFFDB3535),),
                       
                       ],),
                       ),
@@ -148,9 +174,18 @@ class _Report_prevState extends State<Report_prev> {
 
                         // Problems
                         Padding(
-                          padding: const EdgeInsets.only(left:15,right: 15,bottom: 10),
-                          child: Text('Problem: ${equipDetails['problems'][index]['problem']}',
+                          padding: const EdgeInsets.only(left:15,right: 15,bottom: 10,top: 7),
+                          child: Container(
+                            //  color: Colors.pink,
+                             width: MediaQuery.of(context).size.width-100,
+                             height: 40,
+                             child:  
+                          Text('Problem: ${equipDetails['problems'][index]['problem']}',
                         style: TextStyle(color: Color(0xFF497E96)),),
+                          // overflow: TextOverflow.ellipsis,
+                        // maxLines: 2,
+                        // softWrap: true,
+                        )
                         ),
 
                          Padding(
@@ -161,6 +196,10 @@ class _Report_prevState extends State<Report_prev> {
                         
                       ],
                     ),
+
+                      ],
+                    ),
+                     
                   ),
                 ),
                 )

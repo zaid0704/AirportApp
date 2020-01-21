@@ -1,7 +1,8 @@
-import 'package:airport_app/Screens/TabsScreen.dart';
+// import 'package:airport_app/Screens/TabsScreen.dart';
+import './Screens/report_prev.dart';
 
 import './Screens/scanner.dart';
-import './Screens/TabsScreen.dart';
+// import './Screens/TabsScreen.dart';
 import './Screens/home_screen.dart';
 import './Screens/resolved.dart';
 import './Screens/login.dart';
@@ -39,11 +40,12 @@ class MyApp extends StatelessWidget {
         '/homeScreen':(ctx)=>HomeScreen(),
         '/scanner':(ctx)=>Scanner(),
         '/report':(ctx)=>Report(),
-        '/resolved':(ctx)=>Resolved(),
+        // '/resolved':(ctx)=>Resolved(),
         '/problems':(ctx)=>Problems(),
-        '/help':(ctx)=>Help()
+        '/help':(ctx)=>Help(),
+        '/report_prev':(ctx)=>Report_prev()
       },
-      home:Login()
+      home:SignUp()
     ),);
   }
 }

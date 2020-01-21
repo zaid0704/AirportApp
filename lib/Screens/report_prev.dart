@@ -1,24 +1,27 @@
+import 'package:airport_app/Screens/resolved.dart';
 import 'package:flutter/material.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import '../handling_data/Auth.dart';
-class Scanner extends StatefulWidget {
-  Scanner({Key key}) : super(key: key);
+import './report.dart';
+class Report_prev extends StatefulWidget {
+  Report_prev({Key key}) : super(key: key);
 
   @override
-  _ScannerState createState() => _ScannerState();
+  _Report_prevState createState() => _Report_prevState();
 }
 
-class _ScannerState extends State<Scanner> {
+class _Report_prevState extends State<Report_prev> {
+ 
   String cameraScanResult;
-  bool isLoading = true;
+   bool isLoading = true;
   bool once = true;
   bool scanCompleted = false;
   Map<String,dynamic> equipDetails;
 
-  Future _getEquipData(String token)async{
+    Future _getEquipData(String token)async{
   final http.Response response = await http.get(
       Uri.parse('http://sih2020jss.herokuapp.com/component/$cameraScanResult'),
        headers: {
@@ -37,25 +40,24 @@ class _ScannerState extends State<Scanner> {
 
   }
 
-  
   Future _scan()async{
-    cameraScanResult = await scanner.scan();
+     cameraScanResult = await scanner.scan();
    setState(() {
      cameraScanResult = cameraScanResult;
      scanCompleted = true;
    });
-    // print('Here the resulkt$cameraScanResult');
   }
-  void initState() { 
-    super.initState();
-    _scan();
-    
-  }
+   
+    void initState() { 
+      super.initState();
+      _scan();
+    }
   Widget build(BuildContext context) {
-     final auth = Provider.of<Auth>(context);
+    final auth = Provider.of<Auth>(context);
      final token= auth.token;
-    //  print('My Token is $token');
-     if (token!=null &&once&&scanCompleted)
+     print('Token muy $token');
+       
+    if (token!=null &&once&&scanCompleted)
       {
         print('Scan Result is $cameraScanResult');
         _getEquipData(token);
@@ -64,8 +66,7 @@ class _ScannerState extends State<Scanner> {
         });
       }
     return MaterialApp(
-      theme: ThemeData(fontFamily: 'Quicksand'),
-      home: Scaffold(
+      home:  Scaffold(
         backgroundColor: Color(0xFF092D6F) ,
         // body:isLoading?Center(child: CircularProgressIndicator()):
         body:isLoading?Center(child: CircularProgressIndicator(),):
@@ -94,7 +95,7 @@ class _ScannerState extends State<Scanner> {
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(15),
-                child: Text('Scanner',style: TextStyle(color: Colors.white,fontSize: 18),),
+                child: Text('Report',style: TextStyle(color: Colors.white,fontSize: 18),),
               ),
             ),
             Container(
@@ -108,7 +109,13 @@ class _ScannerState extends State<Scanner> {
               child: ListView.builder(
                 itemCount: equipDetails['problems'].length,
                 itemBuilder: (context,index)=>
-                Card(
+                GestureDetector(
+                  onTap: (){
+                    print('Tapped');
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => Resolved(equipDetails['problems'][index]['_id'],equipDetails['problems'][index]['uid'])));
+           
+                  },
+                  child: Card(
                   margin: const EdgeInsets.only(left:15,right: 15,top: 10),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)
@@ -156,6 +163,8 @@ class _ScannerState extends State<Scanner> {
                     ),
                   ),
                 ),
+                )
+                
               ),
             )
           ],

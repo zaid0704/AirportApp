@@ -6,8 +6,8 @@ import '../handling_data/Auth.dart';
 import './MyAppBar.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 class Report extends StatefulWidget {
-  Report({Key key}) : super(key: key);
-
+ 
+  
   @override
   _ReportState createState() => _ReportState();
 }
@@ -32,6 +32,7 @@ class _ReportState extends State<Report> {
     }
  
   Widget build(BuildContext context) {
+   
   final auth = Provider.of<Auth>(context);
   final userUid = auth.userUid;
   final _token =auth.token;
@@ -186,7 +187,7 @@ class _ReportState extends State<Report> {
                child: RaisedButton(
                  elevation: 4.0,
                onPressed: (){
-                 _submit(cameraResult,addrController.text,uidController.text,problemController.text,userUid,_token);
+                 _submit(uidController.text,addrController.text,cameraResult,problemController.text,userUid,_token);
             
                },
                color: Color(0xFF3DBAF1),

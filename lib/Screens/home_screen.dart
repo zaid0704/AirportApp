@@ -70,7 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
 /// ),
 //                       ),
@@ -78,43 +79,70 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.only(left:15,right: 15,top: 15),
                         child: Text('Type of Flight  ${problems[index]['uid']}',style: TextStyle(color: Color(0xFF092D6F),fontWeight: FontWeight.bold,fontSize: 14,fontFamily: 'Poppins'),),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left:15,right: 15,top: 15),
-                        child: !problems[index]['resolve']?Row(children: <Widget>[
+                      SizedBox(width: 10,),
+                           Padding(
+                        padding: const EdgeInsets.only(left: 20,right: 5,top: 15),
+                        child: problems[index]['resolve']?Row(children: <Widget>[
                       Container(
                         width: 13,
                         height: 13,
                         child:  SvgPicture.asset('assets/check_mark.svg',fit:BoxFit.cover),
                       ),
-                     
+                     SizedBox(
+                        width: 3,
+                      ),
                       Text('Resolved',style: TextStyle(color: Color(0xFF6BD25A),fontWeight: FontWeight.bold)),
                       
                       
                       ],):
                         Row(children: <Widget>[
-                      
-                      Text('Reported',style: TextStyle(color: Color(0xFFDB3535),fontWeight: FontWeight.bold)),
-                      Icon(Icons.error,color: Color(0xFFDB3535),),
-                      
-                      ],)
+                      Container(
+                        width: 13,
+                        height: 13,
+                        child:  SvgPicture.asset('assets/error.svg',fit:BoxFit.cover),
                       ),
+                      SizedBox(
+                        width: 3,
+                      ),
+                      Text('Reported',style: TextStyle(color: Color(0xFFDB3535),fontWeight: FontWeight.bold)),
+                      // Icon(Icons.error,color: Color(0xFFDB3535),),
+                      
+                      ],
+                      )
+                      )
+                       
+                     
                        
                       
                       
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
+               
                       Padding(
                       
                         padding: const EdgeInsets.only(left:15,right: 15,top: 7),
-                        child:Text('Problem: ${problems[index]['problem']}',style:TextStyle(color: Color(0xFF497E96),fontFamily: 'Poppins',fontWeight: FontWeight.w400,fontSize: 12))
+                        child:Column(
+                          
+                         children:<Widget>[
+                           Container(
+                            //  color: Colors.pink,
+                             width: MediaQuery.of(context).size.width-100,
+                             height: 40,
+                             child:  Text('Problem: ${problems[index]['problem']}',style:TextStyle(color: Color(0xFF497E96),fontFamily: 'Poppins',fontWeight: FontWeight.w400,fontSize: 12),
+                        
+                           ),
+                          // overflow: TextOverflow.ellipsis,
+                        // maxLines: 2,
+                        // softWrap: true,
+                        )
+                         ]
+                         
+                        ),
+                        
               
-                      )
+                      ),
                       
-                    ],
-                  ),
+                   
                 
                      
                       Padding(
@@ -123,18 +151,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         child:Text('Uid : ${problems[index]['person']}',style:TextStyle(color: Colors.black,fontFamily: 'Poppins',fontWeight: FontWeight.w500,fontSize: 10))
               
                       )
-                    
-                  
-                  
-                    ],
+                   ],
                 
               )
                 ],
               ),
               
             ),
-            
-            
+           
           ),
                   
                   
@@ -214,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 onTap: (){
                   print("Resolved");
-                  Navigator.of(context).pushNamed('/resolved');
+                  Navigator.of(context).pushNamed('/report_prev');
                 },
                 )
               ],
@@ -260,11 +284,11 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(left: 0,right: 10,top: 8),
-                  child: Text('Reported: 78',style: TextStyle(color: Color(0xFF092D6F),fontSize: 16,fontFamily: 'Poppins',fontWeight: FontWeight.w500),),
+                  child: Text('Reported: ${userData['report']}',style: TextStyle(color: Color(0xFF092D6F),fontSize: 16,fontFamily: 'Poppins',fontWeight: FontWeight.w500),),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15,right: 10,top: 8),
-                  child: Text('Resolved: 56',style: TextStyle(color: Color(0xFF092D6F),fontFamily: 'Poppins',fontWeight: FontWeight.w500),),
+                  child: Text('Resolved : ${userData['resolve']}',style: TextStyle(color: Color(0xFF092D6F),fontFamily: 'Poppins',fontWeight: FontWeight.w500),),
                 )
               ],
             )

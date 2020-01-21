@@ -1,31 +1,34 @@
 import './MyAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import '../handling_data/Auth.dart';
+import 'dart:convert';
 class Resolved extends StatefulWidget {
-  Resolved({Key key}) : super(key: key);
+  String _id;
+  String uid;
+  Resolved(this._id,this.uid);
 
   @override
   _ResolvedState createState() => _ResolvedState();
 }
 
 class _ResolvedState extends State<Resolved> {
-  String cameraResult;
-  Future _scan()async{
-     cameraResult =await scanner.scan();
-    setState(() {
-      cameraResult = cameraResult;
-    });
-    print('Camera Result is $cameraResult');
-  }
-  void initState() { 
-    super.initState();
-    _scan();
-  }
+  
   Widget build(BuildContext context) {
+    //  print('Uid is${widget.uid}');
+    // print('id is ${widget.id}');
+    final auth = Provider.of<Auth>(context);
+  
+    final _token =auth.token;
+    print('_id Is : ${widget._id}');
+    print('Token Resolved $_token');
      TextEditingController solution = TextEditingController();
      TextEditingController addrController = TextEditingController();
      TextEditingController uidController = TextEditingController();
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Quicksand'),
       home:Scaffold(
         appBar: MyAppBar(context),
@@ -37,7 +40,7 @@ class _ResolvedState extends State<Resolved> {
             Padding(
               padding: const EdgeInsets.only(top: 50,left: 15,right: 15),
               child:Center(
-             child: Text('UID of Equipment: ${cameraResult}',style: TextStyle(color: Color(0xFF092D6F),fontSize: 20),),
+             child: Text('UID of Equipment: ${widget.uid}',style: TextStyle(color: Color(0xFF092D6F),fontSize: 20),),
               
            ) ,
             ),
@@ -145,7 +148,9 @@ class _ResolvedState extends State<Resolved> {
              child:Padding(
                padding: const EdgeInsets.all(30),
                child: RaisedButton(
-               onPressed: (){},
+               onPressed: (){
+                 _submit(widget._id,widget.uid,_token);
+               },
                color: Color(0xFF3DBAF1),
                child: Text('Resolved',style: TextStyle(color: Color(0xFF092D6F),fontSize: 20),),
              ),
@@ -159,5 +164,21 @@ class _ResolvedState extends State<Resolved> {
       )
     );
     
+  }
+  Future _submit(String _id,String uid,String token)async{
+    print('Resolved Pressed');
+     http.Response response = await http.put(
+       Uri.parse('http://sih2020jss.herokuapp.com/resolve'),
+       body: json.encode({
+         'id':_id,
+         'uid':uid,
+          // 'Authorization': 'Bearer $token',
+       }),
+       headers:  {
+       "Accept":"application/json",
+       "Content-Type": "application/json",
+       "Authorization": "Bearer $token",
+     });
+     print('Resolved ${json.decode(response.body)}');
   }
 }

@@ -53,6 +53,7 @@ flutter:
    - assets/carrds.svg
    - assets/check_mark.svg 
    - assets/help.svg 
+   - assets/error.svg 
 
 
 

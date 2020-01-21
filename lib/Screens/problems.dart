@@ -76,7 +76,7 @@ class _ProblemsState extends State<Problems> {
                  mainAxisAlignment: MainAxisAlignment.start,
                  children: <Widget>[
                    Container(
-                    child: SvgPicture.asset('assets/myImage.svg',
+                    child: SvgPicture.asset('assets/carrds.svg',
                     width: 30,),
                   ),
                  Column(
@@ -96,8 +96,12 @@ class _ProblemsState extends State<Problems> {
                         child: problems[index]['problems'][i]['resolve']?Row(children: <Widget>[
                       
                       Text('Resolved',style: TextStyle(color: Color(0xFF6BD25A),fontWeight: FontWeight.bold)),
-                      Icon(Icons.check,color: Color(0xFF6BD25A),),
                       
+                      Container(
+                        width: 13,
+                        height: 13,
+                        child:  SvgPicture.asset('assets/check_mark.svg',fit:BoxFit.cover),
+                      ),
                       ],):
                         Row(children: <Widget>[
                       

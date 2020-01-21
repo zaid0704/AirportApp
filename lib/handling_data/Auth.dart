@@ -73,14 +73,14 @@ Future<bool> login(String uiid,String password)async{
        
         userData = json.decode(onValue.body);
 
-        if (userData['message']=='Password Incorrect')
+        if (userData['message'] == 'Password Incorrect')
          {
            notifyListeners();
            print('Detected');
            return false;
          }
        _token = json.decode(onValue.body)['token'];
-       print('Token is $_token');
+       print('Ttoken is $_token');
        notifyListeners();
        return true;
      }).catchError((onError){
